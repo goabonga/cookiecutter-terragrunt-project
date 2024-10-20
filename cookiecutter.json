@@ -1,0 +1,9 @@
+{
+    "full_name": "Chris",
+    "email": "goabonga@pm.me",
+    "github_username": "goabonga",
+    "project_name": "ACME Infrastructure",
+    "remote_state_bucket_name": "",
+    "default_environment": "dev",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
+  }

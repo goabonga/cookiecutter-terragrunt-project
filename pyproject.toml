@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "cookiecutter-terragrunt-project"
+version = "0.1.0"
+description = "A Cookiecutter template designed to effortlessly create Terragrunt-based infrastructure projects. With this template, you can set up scalable, multi-environment cloud infrastructure following best practices"
+authors = ["Chris <goabonga@pm.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "^8.3.3"
+cookiecutter = "^2.6.0"
+pytest-cookies = "^0.7.0"
+watchdog = "^5.0.3"
+ruff = "^0.6.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

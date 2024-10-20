@@ -1,0 +1,2 @@
+remote_state:
+  bucket: {{cookiecutter.remote_state_bucket_name}}
