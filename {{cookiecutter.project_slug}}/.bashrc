@@ -25,11 +25,18 @@ function switch_env(){
 
 	clean --silent
 	echo "${WHITE}Swith to environment${RESET} ${PURPLE}${1}${RESET}"
-    gcloud config set project ${project_id}
+	gcloud config set project ${project_id}
 	export ENV=${1}
 }
 
 # terraform like function
+#
+# Terragrunt's CLI redesign (>= v0.73) renamed the global flags
+# (--terragrunt-non-interactive -> --non-interactive,
+# --terragrunt-working-dir -> --working-dir), replaced `run-all <cmd>`
+# with `run --all <cmd>`, and stopped forwarding bare OpenTofu commands -
+# single-unit commands now go through `run -- <cmd>`. Everything after
+# `--` is passed straight to OpenTofu/Terraform.
 
 function init(){
 	if [[ -z "${1}" ]]
@@ -37,9 +44,8 @@ function init(){
 		echo "usage: init ./path/service"
 		return 1
 	fi
-    terragrunt run-all init \
-	-reconfigure --terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- init -reconfigure
 }
 
 function providers(){
@@ -48,9 +54,8 @@ function providers(){
 		echo "usage: providers ./path/service"
 		return 1
 	fi
-    terragrunt providers ${2} \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run -- providers ${2}
 }
 
 function import(){
@@ -59,9 +64,8 @@ function import(){
 		echo "usage: import ./path/service resource uuid"
 		return 1
 	fi
-    terragrunt import ${2} ${3} \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run -- import ${2} ${3}
 }
 
 function state(){
@@ -70,9 +74,8 @@ function state(){
 		echo "usage: state ./path/service "
 		return 1
 	fi
-    terragrunt state ${2} ${3} \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run -- state ${2} ${3}
 }
 
 function apply(){
@@ -81,9 +84,8 @@ function apply(){
 		echo "usage: apply ./path/service"
 		return 1
 	fi
-    terragrunt run-all apply \
-    -auto-approve --terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- apply
 }
 
 function plan(){
@@ -92,9 +94,8 @@ function plan(){
 		echo "usage: plan ./path/service"
 		return 1
 	fi
-    terragrunt run-all plan \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1} ${2}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- plan ${2}
 }
 
 function output(){
@@ -103,9 +104,8 @@ function output(){
 		echo "usage: output ./path/service"
 		return 1
 	fi
-    terragrunt run-all output ${2} \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1} 2> /dev/null
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- output ${2} 2> /dev/null
 }
 
 function show(){
@@ -114,9 +114,8 @@ function show(){
 		echo "usage: show ./path/service"
 		return 1
 	fi
-    terragrunt show ${2} \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run -- show ${2}
 }
 
 function graph(){
@@ -125,9 +124,8 @@ function graph(){
 		echo "usage: graph ./path/service"
 		return 1
 	fi
-    terragrunt run-all graph \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- graph
 }
 
 function refresh(){
@@ -136,9 +134,8 @@ function refresh(){
 		echo "usage: refresh ./path/service"
 		return 1
 	fi
-    terragrunt run-all refresh \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- refresh
 }
 
 function destroy(){
@@ -147,9 +144,8 @@ function destroy(){
 		echo "usage: destroy ./path/service"
 		return 1
 	fi
-    terragrunt run-all destroy \
-	--terragrunt-non-interactive \
-	--terragrunt-working-dir=${1}
+	terragrunt --non-interactive --working-dir "${1}" \
+		run --all -- destroy
 }
 
 function clean(){
@@ -163,5 +159,3 @@ function clean(){
 	-o -type f -name "generated_*.tf" | \
 	xargs rm -Rf
 }
-
-
