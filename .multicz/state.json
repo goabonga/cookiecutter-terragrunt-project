@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "git_head": "0dc4b6627674a279b475cb0b3037717b9dfe0aad",
-  "git_head_short": "0dc4b66",
-  "timestamp": "2026-05-20T12:37:59Z",
+  "git_head": "b428b3521848079a7357a6239eb1ab7d254a5986",
+  "git_head_short": "b428b35",
+  "timestamp": "2026-05-20T13:51:03Z",
   "components": {
     "cookiecutter-terragrunt-project": {
-      "version": "0.1.0",
-      "tag": "0.1.0",
+      "version": "0.1.1",
+      "tag": "0.1.1",
       "tag_sha": null
     }
   }

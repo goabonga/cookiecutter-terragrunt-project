@@ -2,6 +2,12 @@
 
 All notable changes to this component are documented here.
 
+## [0.1.1] - 2026-05-20
+
+### Fixed
+
+- complete PyPI package metadata (`e3158de`)
+
 ## [0.1.0] - 2026-05-20
 
 ### Added
