@@ -3,7 +3,7 @@
 
 [project]
 name = "cookiecutter-terragrunt-project"
-version = "0.0.1"
+version = "0.1.0"
 description = "A Cookiecutter template to scaffold scalable, multi-environment Terragrunt infrastructure projects."
 readme = "README.md"
 requires-python = ">=3.12"
