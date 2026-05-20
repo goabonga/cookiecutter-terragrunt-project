@@ -1,71 +1,84 @@
+# cookiecutter-terragrunt-project
 
-# 🚀 cookiecutter-terragrunt-project
+[![CI](https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/goabonga/cookiecutter-terragrunt-project/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-A Cookiecutter template designed to effortlessly create Terragrunt-based infrastructure projects. With this template, you can set up scalable, multi-environment cloud infrastructure following best practices, all while saving time and ensuring consistency across your deployments. 🌍
+A [Cookiecutter](https://cookiecutter.readthedocs.io/) template to scaffold
+scalable, multi-environment [Terragrunt](https://terragrunt.gruntwork.io)
+infrastructure projects: a DRY root configuration (providers, GCS remote
+state, version pin), a per-environment `config.<env>.yaml`, and a set of
+shell helpers wrapping the Terragrunt CLI.
 
-## 🎯 Features
+## Features
 
-- 🌍 **Multi-environment Support**: Quickly set up different environments (e.g., dev, staging, production) using Terragrunt.
-- 💡 **DRY Terraform Configurations**: Utilize Terragrunt's capabilities to keep your Terraform code DRY and maintainable.
-- 🛠️ **Customizable**: Easily customize the generated structure to fit your team's requirements.
+- **Multi-environment** — switch between `dev` / `staging` / `prod` with a
+  per-environment YAML config.
+- **DRY** — one root `terragrunt.hcl` every module inherits via
+  `find_in_parent_folders()`.
+- **Batteries included** — `.bashrc` helpers (`switch_env`, `plan`,
+  `apply`, `destroy`, …) wrapping the modern Terragrunt CLI.
+- **Pairs with** [terragrunt-generator](https://github.com/goabonga/terragrunt-generator)
+  to populate the scaffold with per-module `terragrunt.hcl` files.
 
-## 📚 Getting Started
+## Requirements
 
-1. **Prerequisites**:
-   - Python 3.6+ 🐍
-   - [Cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html) installed 🍪
-   - [Terragrunt](https://terragrunt.gruntwork.io) and [Terraform](https://www.terraform.io) installed 🌱
+- Python 3.12+
+- [Terraform](https://www.terraform.io) / [OpenTofu](https://opentofu.org)
+  and [Terragrunt](https://terragrunt.gruntwork.io) (>= v0.73, new CLI)
 
-2. **Installation**:
+## Usage
 
-   Install Cookiecutter if you haven't already:
+Generate a project straight from GitHub (no install needed):
 
-   ```sh
-   pip install cookiecutter
-   ```
-
-3. **Generate a new Terragrunt project**:
-
-   ```sh
-   cookiecutter https://github.com/your-org/cookiecutter-terragrunt-project.git
-   ```
-
-4. **Follow the prompts** to configure your project (e.g., project name, environments) 📝.
-
-## 📁 Project Structure
-
-The generated project will have a structure similar to:
-
-```
-.
-├── google
-│   └── terragrunt.hcl
-└── README.md
+```bash
+uvx cookiecutter gh:goabonga/cookiecutter-terragrunt-project
+# or: cookiecutter gh:goabonga/cookiecutter-terragrunt-project
 ```
 
-## 🎉 Why Choose cookiecutter-terragrunt-project?
+Or install the published template from PyPI and bake the bundled copy:
 
-- 🛠️ **Developer-Friendly**: Designed with simplicity and productivity in mind, allowing developers to focus on infrastructure rather than setup.
-- 🔄 **Multi-environment Workflows**: Quickly set up, configure, and manage multiple environments with ease.
+```bash
+pip install cookiecutter-terragrunt-project
+cookiecutter "$(python -c 'import cookiecutter_terragrunt_project as p; print(p.__path__[0])')"
+```
 
-## 🤝 Contributing
+Answer the prompts (`project_name`, `default_environment`,
+`remote_state_bucket_name`, …) and you get:
 
-We welcome contributions from the community! 🌍
+```
+<project_slug>/
+├── .bashrc                 # terragrunt helpers (switch_env, plan, apply, …)
+├── config.<env>.yaml       # per-environment values
+└── google/
+    └── terragrunt.hcl      # root config: providers, GCS backend, versions
+```
 
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
+## Day-2 workflow
 
-## 📄 License
+```bash
+source .bashrc           # adds switch_env / plan / apply / destroy / …
+switch_env dev           # sets ENV=dev and the gcloud project
+plan  ./google/network   # terragrunt run --all -- plan on a subtree
+apply ./google/network/vpc
+```
 
-This project is licensed under the MIT License 📜. See the [LICENSE](LICENSE) file for details.
+## Development
 
-## ✨ Acknowledgements
+```bash
+git clone https://github.com/goabonga/cookiecutter-terragrunt-project.git
+cd cookiecutter-terragrunt-project
+uv sync
+uv run pytest          # bake smoke tests
+uvx cookiecutter .     # generate a project from the working copy
+```
 
-Thanks to all the developers and contributors who make `cookiecutter-terragrunt-project` possible. Let's build great infrastructure together! ⚓
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, the commit-message
+convention and the release process. By participating you agree to the
+[Code of Conduct](CODE_OF_CONDUCT.md). Security issues: see
+[SECURITY.md](SECURITY.md).
 
----
+## License
 
-Enjoy using `cookiecutter-terragrunt-project` to streamline your infrastructure projects! 🎊
+Distributed under the [MIT License](LICENSE).
