@@ -1,66 +1,44 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024-2026 Chris <goabonga@pm.me>
+
 from contextlib import contextmanager
-import shlex
-import os
-import sys
-import subprocess
-import yaml
-import datetime
-import pytest
+
 from cookiecutter.utils import rmtree
 
-from click.testing import CliRunner
-
-import importlib
-
 
 @contextmanager
-def inside_dir(dirpath):
-    """
-    Execute code from inside the given directory
-    :param dirpath: String, path of the directory the command is being run.
-    """
-    old_path = os.getcwd()
-    try:
-        os.chdir(dirpath)
-        yield
-    finally:
-        os.chdir(old_path)
-
-
-@contextmanager
-def bake_in_temp_dir(cookies, *args, **kwargs):
-    """
-    Delete the temporal directory that is created when executing the tests
-    :param cookies: pytest_cookies.Cookies,
-        cookie to be baked and its temporal files will be removed
-    """
-    result = cookies.bake(*args, **kwargs)
+def bake_in_temp_dir(cookies, **kwargs):
+    """Bake the template and clean up the generated project afterwards."""
+    result = cookies.bake(**kwargs)
     try:
         yield result
     finally:
-        rmtree(str(result.project_path))
+        if result.project_path is not None:
+            rmtree(str(result.project_path))
 
 
-def run_inside_dir(command, dirpath):
-    """
-    Run a command from inside a given directory, returning the exit status
-    :param command: Command that will be executed
-    :param dirpath: String, path of the directory the command is being run.
-    """
-    with inside_dir(dirpath):
-        return subprocess.check_call(shlex.split(command))
-
-
-def check_output_inside_dir(command, dirpath):
-    "Run a command from inside a given directory, returning the command output"
-    with inside_dir(dirpath):
-        return subprocess.check_output(shlex.split(command))
-
-def test_flottille_with_defaults(cookies):
+def test_bake_with_defaults(cookies):
     with bake_in_temp_dir(cookies) as result:
-        assert result.project_path.is_dir()
         assert result.exit_code == 0
         assert result.exception is None
+        assert result.project_path.is_dir()
 
-        found_toplevel_files = [f.name for f in list(result.project_path.glob('./*'))]
-        assert 'README.md' in found_toplevel_files
+        # project_name "ACME Infrastructure" -> slug "acme_infrastructure".
+        assert result.project_path.name == "acme_infrastructure"
+
+        top_level = {f.name for f in result.project_path.glob("*")}
+        assert "README.md" in top_level
+        assert "config.dev.yaml" in top_level
+        assert ".bashrc" in top_level
+        assert (result.project_path / "google" / "terragrunt.hcl").is_file()
+
+
+def test_bake_with_custom_environment(cookies):
+    with bake_in_temp_dir(
+        cookies,
+        extra_context={"project_name": "My Infra", "default_environment": "prod"},
+    ) as result:
+        assert result.exit_code == 0
+        assert result.project_path.name == "my_infra"
+        # The per-environment config filename follows default_environment.
+        assert (result.project_path / "config.prod.yaml").is_file()
