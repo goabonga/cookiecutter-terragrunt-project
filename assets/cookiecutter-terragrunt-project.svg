@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  SPDX-License-Identifier: MIT
+  Copyright (c) 2024-2026 Chris <goabonga@pm.me>
+
+  Master logo for cookiecutter-terragrunt-project.
+
+  Three isometric plates stacked on a single axis: the dev / staging /
+  prod environments the template bakes, each inheriting the same root
+  terragrunt.hcl below it. The plates are cut to identical dimensions
+  because they come out of one cutter - the Cookiecutter template. The
+  purple palette is Terraform's, the toolchain Terragrunt drives.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Rounded shell -->
+  <rect x="16" y="16" width="224" height="224" rx="52" fill="#4B2A82"/>
+  <rect x="34" y="34" width="188" height="188" rx="40" fill="#7B42BC"/>
+  <!-- Plates, bottom first: each one occludes the plate beneath it -->
+  <!-- prod -->
+  <path d="M128 141 L192 168 L128 195 L64 168 Z" fill="#FFFFFF"/>
+  <path d="M64 168 L128 195 L128 208 L64 181 Z" fill="#D9C7F0"/>
+  <path d="M192 168 L128 195 L128 208 L192 181 Z" fill="#4B2A82"/>
+  <!-- staging -->
+  <path d="M128 97 L192 124 L128 151 L64 124 Z" fill="#FFFFFF"/>
+  <path d="M64 124 L128 151 L128 164 L64 137 Z" fill="#D9C7F0"/>
+  <path d="M192 124 L128 151 L128 164 L192 137 Z" fill="#4B2A82"/>
+  <!-- dev -->
+  <path d="M128 53 L192 80 L128 107 L64 80 Z" fill="#FFFFFF"/>
+  <path d="M64 80 L128 107 L128 120 L64 93 Z" fill="#D9C7F0"/>
+  <path d="M192 80 L128 107 L128 120 L192 93 Z" fill="#4B2A82"/>
+</svg>
