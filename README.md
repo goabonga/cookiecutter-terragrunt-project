@@ -22,11 +22,11 @@ shell helpers wrapping the Terragrunt CLI.
 
 ## Features
 
-- **Multi-environment** — switch between `dev` / `staging` / `prod` with a
+- **Multi-environment** - switch between `dev` / `staging` / `prod` with a
   per-environment YAML config.
-- **DRY** — one root `terragrunt.hcl` every module inherits via
+- **DRY** - one root `terragrunt.hcl` every module inherits via
   `find_in_parent_folders()`.
-- **Batteries included** — `.bashrc` helpers (`switch_env`, `plan`,
+- **Batteries included** - `.bashrc` helpers (`switch_env`, `plan`,
   `apply`, `destroy`, …) wrapping the modern Terragrunt CLI.
 - **Pairs with** [terragrunt-generator](https://github.com/goabonga/terragrunt-generator)
   to populate the scaffold with per-module `terragrunt.hcl` files.
