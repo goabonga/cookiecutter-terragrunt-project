@@ -1,9 +1,18 @@
-# cookiecutter-terragrunt-project
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/goabonga/cookiecutter-terragrunt-project/main/assets/cookiecutter-terragrunt-project.svg" alt="cookiecutter-terragrunt-project" width="120" /><br/>
+  cookiecutter-terragrunt-project
+</h1>
 
-[![CI](https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/goabonga/cookiecutter-terragrunt-project/blob/main/LICENSE)
-[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
-[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+<p align="center">
+  <em>Scaffold multi-environment Terragrunt infrastructure, DRY from the first commit.</em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml"><img src="https://github.com/goabonga/cookiecutter-terragrunt-project/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"/></a>
+  <a href="https://github.com/goabonga/cookiecutter-terragrunt-project/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"/></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.12%2B-blue.svg" alt="Python"/></a>
+  <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="uv"/></a>
+</p>
 
 A [Cookiecutter](https://cookiecutter.readthedocs.io/) template to scaffold
 scalable, multi-environment [Terragrunt](https://terragrunt.gruntwork.io)
